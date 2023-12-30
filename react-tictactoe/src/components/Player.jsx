@@ -1,11 +1,10 @@
-import { useState, useRef } from "react";
-export default function Player({ playerSymbol }) {
+import { useState, useRef, isValidElement } from "react";
+export default function Player({ playerSymbol, isActive }) {
   const [isEditing, setIsEditing] = useState(false);
   const [playerName, setPlayerName] = useState("");
 
   function handleEditClick() {
-    setIsEditing(editing => !editing);
-    console.log("handleEditClick");
+    setIsEditing((editing) => !editing);
   }
 
   function handleInputKeyDown(event) {
@@ -21,35 +20,35 @@ export default function Player({ playerSymbol }) {
     if (isEditing) {
       setIsEditing(false);
       setPlayerName(event.target.value);
-      console.log("handleInputBlur");
     }
-
   }
 
   function handleInputOnChange(event) {
     setPlayerName(event.target.value);
   }
 
-  let playerNameElement = isEditing ?
-    (<input
+  let playerNameElement = isEditing ? (
+    <input
       autoFocus
       type="text"
       value={playerName}
       onKeyDown={handleInputKeyDown}
       onBlur={handleInputBlur}
-      onChange={handleInputOnChange} />) :
-    (<span
-      className="player-name">
-      {playerName}
-    </span>)
+      onChange={handleInputOnChange}
+    />
+  ) : (
+    <span className="player-name">{playerName}</span>
+  );
 
   return (
-    <li>
+    <li className={isActive ? "active" : undefined}>
       <span className="player">
         {playerNameElement}
         <span className="player-symbol">{playerSymbol}</span>
       </span>
-      <button id="edit-button" onClick={handleEditClick}>{isEditing ? "Save" : "Edit"}</button>
+      <button id="edit-button" onClick={handleEditClick}>
+        {isEditing ? "Save" : "Edit"}
+      </button>
     </li>
   );
 }
