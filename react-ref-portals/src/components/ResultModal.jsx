@@ -10,7 +10,7 @@ const ResultModal = forwardRef(function ResultModal(
   const formattedRemainingTime = (remainingTime / 1000).toFixed(2);
   const score = Math.round((1 - remainingTime / (targetTime * 1000)) * 100);
 
-  useImperativeHandle(ref, () => {
+  useImperativeHandle(ref, () => { 
     return {
       open() {
         dialogRef.current.showModal();
